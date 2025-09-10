@@ -17,6 +17,99 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Функционал для отзывов
+    const reviewModal = document.getElementById('reviewModal');
+    const reviewForm = document.getElementById('reviewForm');
+    const stars = document.querySelectorAll('.star');
+    let selectedRating = 0;
+
+    // Обработчики для звезд рейтинга
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            selectedRating = parseInt(this.dataset.value);
+            updateStars(selectedRating);
+        });
+    });
+
+    function updateStars(rating) {
+        stars.forEach(star => {
+            const value = parseInt(star.dataset.value);
+            star.textContent = value <= rating ? '⭐' : '☆';
+            star.classList.toggle('active', value <= rating);
+        });
+    }
+
+    // Открытие модального окна
+    window.openReviewForm = function() {
+        reviewModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Закрытие модального окна
+    window.closeReviewForm = function() {
+        reviewModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        reviewForm.reset();
+        selectedRating = 0;
+        updateStars(0);
+    };
+
+    // Закрытие по клику вне окна
+    window.addEventListener('click', function(event) {
+        if (event.target === reviewModal) {
+            closeReviewForm();
+        }
+    });
+
+    // Обработка отправки формы
+    reviewForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (selectedRating === 0) {
+            alert('Пожалуйста, выберите оценку');
+            return;
+        }
+
+        const name = document.getElementById('reviewName').value;
+        const device = document.getElementById('reviewDevice').value;
+        const text = document.getElementById('reviewText').value;
+
+        // Здесь можно добавить отправку на сервер
+        // Пока просто покажем сообщение
+        alert('Спасибо за ваш отзыв! После модерации он появится на сайте.');
+        closeReviewForm();
+    });
+
+    // Функции для социальных сетей
+    window.shareVK = function() {
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        window.open(`https://vk.com/share.php?url=${url}&title=${title}`, '_blank');
+        return false;
+    };
+
+    window.shareTelegram = function() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(document.title);
+        window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+        return false;
+    };
+
+    window.shareTwitter = function() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(document.title);
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        return false;
+    };
+
+    window.shareFacebook = function() {
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        return false;
+    };
+});
+
+    
     // Анимация появления элементов при прокрутке
     const observerOptions = {
         threshold: 0.1,
@@ -111,3 +204,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
