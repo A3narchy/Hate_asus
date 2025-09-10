@@ -38,7 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Добавляем год в футер
     const currentYear = new Date().getFullYear();
-    document.querySelector('footer p:last-child').innerHTML = `© ${currentYear} - Почему я не рекомендую технику ASUS`;
+    const footerText = document.querySelector('footer p:last-child');
+    if (footerText) {
+        footerText.innerHTML = `© ${currentYear} - Почему я не рекомендую технику ASUS`;
+    }
     
     // Добавляем интерактивность для списков
     document.querySelectorAll('.problem-list li').forEach(item => {
@@ -68,46 +71,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Стили для кнопки "Наверх" - теперь добавляем через создание элемента style
-    const styleElement = document.createElement('style');
-    styleElement.textContent = `
-        .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            padding: 12px 15px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 1000;
-            font-size: 18px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .scroll-to-top.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .scroll-to-top:hover {
-            background-color: #c0392b;
-            transform: translateY(-3px);
-        }
-        
-        .problem-list li {
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-        
-        .problem-list li.highlighted {
-            background-color: #ffe6e6;
-            border-radius: 4px;
-        }
-    `;
-    
-    document.head.appendChild(styleElement);
+    // Добавляем лайтбокс для галереи
+    const galleryImages = document.querySelectorAll('.gallery-image');
+    galleryImages.forEach(image => {
+        image.addEventListener('click', function() {
+            // Создаем overlay для лайтбокса
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+            overlay.style.zIndex = '2000';
+            overlay.style.cursor = 'pointer';
+            
+            // Создаем увеличенное изображение
+            const enlargedImg = document.createElement('img');
+            enlargedImg.src = this.src;
+            enlargedImg.alt = this.alt;
+            enlargedImg.style.maxWidth = '90%';
+            enlargedImg.style.maxHeight = '90%';
+            enlargedImg.style.objectFit = 'contain';
+            enlargedImg.style.borderRadius = '8px';
+            
+            // Добавляем изображение в overlay
+            overlay.appendChild(enlargedImg);
+            
+            // Закрытие при клике
+            overlay.addEventListener('click', function() {
+                document.body.removeChild(overlay);
+            });
+            
+            // Добавляем overlay на страницу
+            document.body.appendChild(overlay);
+        });
+    });
 });
