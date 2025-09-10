@@ -3,39 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой сайт на GitHub Pages</title>
+    <title>Почему я не рекомендую технику ASUS</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#contact">Контакты</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <h1>Почему я не рекомендую технику ASUS</h1>
+            <p>Объективный анализ недостатков продуктов ASUS на основе личного опыта</p>
+        </div>
     </header>
-
-    <main>
-        <section id="home">
-            <h1>Добро пожаловать на мой сайт!</h1>
-            <p>Этот сайт размещен на GitHub Pages</p>
+    
+    <nav>
+        <ul>
+            <li><a href="#phones">Смартфоны</a></li>
+            <li><a href="#laptop1">Ноутбук #1</a></li>
+            <li><a href="#laptop2">Ноутбук #2</a></li>
+            <li><a href="#laptop3">Ноутбук #3</a></li>
+        </ul>
+    </nav>
+    
+    <main class="container">
+        <section id="phones" class="content-section">
+            <h2>Смартфоны ASUS</h2>
+            <p>Хотя ASUS производит smartphones с инновационными функциями, я сталкивался со следующими проблемами:</p>
+            <ul class="problem-list">
+                <li>Нестабильная работа фирменной оболочки Android с частыми лагами</li>
+                <li>Слабый отдел контроля качества - высокий процент брака</li>
+                <li>Проблемы с обновлениями: долгие ожидания и мало мажорных апдейтов</li>
+                <li>Низкая ремонтопригодность и дорогие запчасти</li>
+                <li>Плохая оптимизация камеры - снимки часто выходят хуже, чем у конкурентов</li>
+            </ul>
+        </section>
+        
+        <section id="laptop1" class="content-section">
+            <h2>Ноутбук ASUS #1 (Игровая серия ROG)</h2>
+            <p>Игровые ноутбуки ASUS ROG выглядят привлекательно, но имеют существенные недостатки:</p>
+            <ul class="problem-list">
+                <li>Высокий уровень шума даже при средних нагрузках</li>
+                <li>Перегрев и троттлинг процессора и видеокарты под нагрузкой</li>
+                <li>Низкое качество сборки - люфты, скрипы и проблемы с петлями</li>
+                <li>Слишком агрессивный и навязчивый фирменный софт</li>
+                <li>Завышенная цена по сравнению с конкурентами с аналогичными характеристиками</li>
+            </ul>
+        </section>
+        
+        <section id="laptop2" class="content-section">
+            <h2>Ноутбук ASUS #2 (Ультрабуки ZenBook)</h2>
+            <p>ZenBook позиционируются как стильные и производительные ультрабуки, но и здесь есть проблемы:</p>
+            <ul class="problem-list">
+                <li>Хрупкость конструкции - корпус легко царапается и деформируется</li>
+                <li>Проблемы с клавиатурой - ход клавиш слишком короткий, быстрый износ</li>
+                <li>Неудобное расположение портов</li>
+                <li>Экран с узкими углами обзора и низкой цветопередачей в базовых моделях</li>
+                <li>Среднее время автономной работы, не соответствующее заявленному</li>
+            </ul>
+        </section>
+        
+        <section id="laptop3" class="content-section">
+            <h2>Ноутбук ASUS #3 (Бюджетная серия VivoBook)</h2>
+            <p>Бюджетные ноутбуки ASUS VivoBook имеют самые серьезные проблемы с качеством:</p>
+            <ul class="problem-list">
+                <li>Использование самых дешевых материалов, что сказывается на долговечности</li>
+                <li>Низкая производительность из-за установки медленных SSD и недостатка RAM</li>
+                <li>Ужасные экраны с низким разрешением и плохой цветопередачей</li>
+                <li>Частые проблемы с Wi-Fi модулем</li>
+                <li>Отсутствие нормальной технической поддержки для бюджетных моделей</li>
+            </ul>
         </section>
 
-        <section id="about">
-            <h2>О нас</h2>
-            <p>Информация о вашем проекте или компании.</p>
-        </section>
-
-        <section id="contact">
-            <h2>Контакты</h2>
-            <p>Свяжитесь с нами: example@email.com</p>
+        <section class="content-section">
+            <h2>Альтернативы</h2>
+            <p>На основе моего опыта, я бы рекомендовал рассмотреть технику следующих брендов:</p>
+            <div class="alternatives">
+                <div class="brand">
+                    <h3>Ноутбуки</h3>
+                    <ul>
+                        <li>Lenovo (серии ThinkPad и Legion)</li>
+                        <li>Dell (линейки XPS и Latitude)</li>
+                        <li>HP (серии EliteBook и Spectre)</li>
+                    </ul>
+                </div>
+                <div class="brand">
+                    <h3>Смартфоны</h3>
+                    <ul>
+                        <li>Samsung (серии Galaxy S и A)</li>
+                        <li>Google Pixel</li>
+                        <li>Xiaomi (линейки Mi и Redmi)</li>
+                    </ul>
+                </div>
+            </div>
         </section>
     </main>
-
+    
     <footer>
-        <p>&copy; 2024 Мой сайт. Все права защищены.</p>
+        <div class="container">
+            <p>Данный сайт создан на основе личного опыта и не является профессиональным обзором</p>
+            <p>© 2023 - Почему я не рекомендую технику ASUS</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>
