@@ -125,8 +125,10 @@ nav a:hover {
 .product-image img {
     max-width: 100%;
     height: auto;
+    max-height: 200px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover
 }
 
 .problem-list {
@@ -239,10 +241,10 @@ footer {
     }
 }
 
-/* Адаптивность */
+
 @media (max-width: 768px) {
-    .banner-overlay h1 {
-        font-size: 2rem;
+    .product-image img {
+        max-height: 150px;
     }
     
     .banner-overlay p {
@@ -304,3 +306,4 @@ footer {
     background-color: #ffe6e6;
     border-radius: 4px;
 }
+
