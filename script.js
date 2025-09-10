@@ -7,15 +7,115 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             
-            window.scrollTo({
-                top: targetElement.offsetTop - 60,
-                behavior: 'smooth'
-            });
-            
-            // Обновляем URL без перезагрузки страницы
-            history.pushState(null, null, targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 60,
+                    behavior: 'smooth'
+                });
+                
+                // Обновляем URL без перезагрузки страницы
+                history.pushState(null, null, targetId);
+            }
         });
     });
+    
+    // Анимация появления элементов при прокрутке
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    // Наблюдаем за всеми секциями
+    document.querySelectorAll('.content-section').forEach(section => {
+        observer.observe(section);
+    });
+    
+    // Добавляем год в футер
+    const currentYear = new Date().getFullYear();
+    const footerText = document.querySelector('footer p:last-child');
+    if (footerText) {
+        footerText.innerHTML = `© ${currentYear} - Почему я не рекомендую технику ASUS`;
+    }
+    
+    // Добавляем интерактивность для списков
+    document.querySelectorAll('.problem-list li').forEach(item => {
+        item.addEventListener('click', function() {
+            this.classList.toggle('highlighted');
+        });
+    });
+    
+    // Добавляем кнопку для возврата к началу страницы
+    const scrollToTopBtn = document.createElement('button');
+    scrollToTopBtn.innerHTML = '↑ Наверх';
+    scrollToTopBtn.classList.add('scroll-to-top');
+    document.body.appendChild(scrollToTopBtn);
+    
+    scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    });
+    
+    // Создаем лайтбокс
+    const lightbox = document.createElement('div');
+    lightbox.classList.add('lightbox');
+    lightbox.innerHTML = `
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" src="" alt="">
+        <div class="lightbox-caption"></div>
+    `;
+    document.body.appendChild(lightbox);
+    
+    const lightboxImg = lightbox.querySelector('.lightbox-content');
+    const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    
+    // Добавляем обработчики для галереи
+    document.querySelectorAll('.gallery-image').forEach(image => {
+        image.addEventListener('click', function() {
+            lightboxImg.src = this.src;
+            lightboxCaption.textContent = this.nextElementSibling?.textContent || '';
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+    // Закрытие лайтбокса
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+    
+    // Закрытие по ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+    
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
     
     // Функционал для отзывов
     const reviewModal = document.getElementById('reviewModal');
@@ -107,101 +207,22 @@ document.addEventListener('DOMContentLoaded', function() {
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
         return false;
     };
-});
 
-    
-    // Анимация появления элементов при прокрутке
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-    
-    // Наблюдаем за всеми секциями
-    document.querySelectorAll('.content-section').forEach(section => {
-        observer.observe(section);
-    });
-    
-    // Добавляем год в футер
-    const currentYear = new Date().getFullYear();
-    const footerText = document.querySelector('footer p:last-child');
-    if (footerText) {
-        footerText.innerHTML = `© ${currentYear} - Почему я не рекомендую технику ASUS`;
-    }
-    
-    // Добавляем интерактивность для списков
-    document.querySelectorAll('.problem-list li').forEach(item => {
-        item.addEventListener('click', function() {
-            this.classList.toggle('highlighted');
-        });
-    });
-    
-    // Добавляем кнопку для возврата к началу страницы
-    const scrollToTopBtn = document.createElement('button');
-    scrollToTopBtn.innerHTML = '↑ Наверх';
-    scrollToTopBtn.classList.add('scroll-to-top');
-    document.body.appendChild(scrollToTopBtn);
-    
-    scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            scrollToTopBtn.classList.add('visible');
-        } else {
-            scrollToTopBtn.classList.remove('visible');
-        }
-    });
-    
-    // Добавляем лайтбокс для галереи
-    const galleryImages = document.querySelectorAll('.gallery-image');
-    galleryImages.forEach(image => {
-        image.addEventListener('click', function() {
-            // Создаем overlay для лайтбокса
-            const overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
-            overlay.style.display = 'flex';
-            overlay.style.justifyContent = 'center';
-            overlay.style.alignItems = 'center';
-            overlay.style.zIndex = '2000';
-            overlay.style.cursor = 'pointer';
-            
-            // Создаем увеличенное изображение
-            const enlargedImg = document.createElement('img');
-            enlargedImg.src = this.src;
-            enlargedImg.alt = this.alt;
-            enlargedImg.style.maxWidth = '90%';
-            enlargedImg.style.maxHeight = '90%';
-            enlargedImg.style.objectFit = 'contain';
-            enlargedImg.style.borderRadius = '8px';
-            
-            // Добавляем изображение в overlay
-            overlay.appendChild(enlargedImg);
-            
-            // Закрытие при клике
-            overlay.addEventListener('click', function() {
-                document.body.removeChild(overlay);
+    // Ленивая загрузка изображений
+    if ('IntersectionObserver' in window) {
+        const lazyImageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove('lazy');
+                    lazyImageObserver.unobserve(lazyImage);
+                }
             });
-            
-            // Добавляем overlay на страницу
-            document.body.appendChild(overlay);
         });
-    });
+        
+        document.querySelectorAll('img[data-src]').forEach(function(lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+        });
+    }
 });
-
